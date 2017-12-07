@@ -24,6 +24,7 @@ def is_square(num):
         if x in y: return False
         y.add(x)
     if is_fair (x):
+        print(x)
         return True  
     else:
         return False
@@ -35,13 +36,13 @@ def is_fair_and_square(num):
     else: 
         return False
     
-#Find all fair and sqaure number in an interval
+#Find all fair and square number in an interval
 def main():    
     #Input lower limit of interval
-    lower = input("Enter lower limit of interval: ")
+    lower = int(input("Enter lower limit of interval: "))
     
     #Input upper limit of interval
-    upper = input("Enter upper limit of interval: ")
+    upper = int(input("Enter upper limit of interval: "))
     
     #List of fair_and_square
     fairSquareList = []
