@@ -1,0 +1,108 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf820
+{\fonttbl\f0\fnil\fcharset0 Calibri;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww18120\viewh13580\viewkind0
+\deftab720
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f0\fs32 \cf2 \expnd0\expndtw0\kerning0
+The first dictionary groups the names by the first character and the second dictionary groups\'a0the names by the second character.\'a0\
+\uc0\u8232 \
+name_list_1 = \{ 'a' : \{'amanda' : 'amanda', \'a0'alan' : 'alan'\}, 'b' :\{...\}, ...\}\
+name_list_2 = \{ 'a' : \{'hannah' : 'hannah', \'a0'farrah' : 'farrah'\}, 'b' :\{...\}, ...\}\uc0\u8232 \
+We also keep a character list from a -> z with 26 elements\
+\
+character_list = ['a','b',...'z']\uc0\u8232 \
+Since the name is unique, looking up the name as key would be easy and one constant step.\'a0\
+\uc0\u8232 \
+When user inputs a name, for example 'Alan',  there are 3 matching cases. For each case, we execute the following pseudo code in order, stop when found an exact match or 1 edit away\
+\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\b \cf2 Case 1: A matching name starts with A, for instance, 'Alan, Al\ul a\ulnone an or Ala\ul a\ulnone '
+\b0 \
+Look up in name_list_1 by the starting character of input name 'a':\
+If found 'Alan' by key:\
+\'a0 \'a0return False 
+\b (I)
+\b0 \uc0\u8232 \
+Else If not found 'Alan' exactly:\
+\'a0 \'a0For i in character list:\
+\'a0 \'a0 \'a0 \'a0For each index in input name:\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0new_name =\'a0Insert\'a0i to the input name at that index 
+\b (Alan -> A\ul a\ulnone lan -> Al\ul a\ulnone an and so on)
+\b0 \
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0Look up in name_list_1\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0If found the new_name by key:\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0return False 
+\b (II)
+\b0 \
+\
+\'a0 \'a0 \'a0 For each index in input name:\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0new_name = replace the current character at the index with i 
+\b (Alan -> A\ul a\ulnone an -> Al\ul a\ulnone n -> Ala\ul a\ulnone  and so on)
+\b0 \
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0Look up in name_list 1\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0If found the new_name by key:\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0return False 
+\b (III)\
+\
+Case 2:  A matching name whose second character is A, for instance, 'Balan'
+\b0 \
+\
+Look up in name_list_2 by the starting character of input name 'a':\
+For i in character list:\
+	new_name = i+ input_name  (Alan -> Aalan -> Balan -> Calan and so on)\
+
+\b 	
+\b0 Look up in name_list_2 by i:\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0If found the new_name by key:\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0return False 
+\b (IV)\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\b0 \cf2 \
+\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\b \cf2 Case 2: A matching name starting with another character but A, for instance, 'Elan'
+\b0 \
+Look up in name_list_2 by the second character of input name 'l':\
+For i in character list:\
+	new_name = replace the first character of input with i (Alan -> Alan -> Blan -> Clan  -> Dlan -> Elan and so on)\
+
+\b 	
+\b0 Look up in name_list_2 by new_name:\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0If found the new_name by key:\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0return False 
+\b (V)\
+\
+Return True if no matching case\
+\
+If output == True : Name is unique\
+Else: Name is not unique\
+\
+\ul Performance\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\b0 \cf2 \ulnone (I): Time complexity (TC) is constant (one step look up)\
+(II): Since there are 26 characters, the worst case will take 26n steps, with n being the length of the input name, hence TC is to order of n\
+(III): Since there are 26 characters, the worst case will take 26n steps, with n being the length of the input name, hence TC is to order of n\
+\
+So if we encounter matching case 1, our best scenario will be 1 step and worst case will be 32n steps (order of n)\
+\
+(IV): Since there are 26 characters, the worst case will take 26n steps, with n being the length of the input name, hence TC is to order of n\
+(V):  Since there are 26 characters, the worst case will take 26n steps, with n being the length of the input name, hence TC is to order of n\
+\
+So for both case II and III, our best scenario will be 1 step and worst case will be 26n steps each (order of n)\
+\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\b \cf2 Overall, we manage to keep our query time to constant or to the power on n (n is the length of input search) and independent of the database size.\
+\
+The downside of this implementation is the space complexity since we are keeping two lists of name, hence we could be storing up to 2 billions strings. \
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+
+\f1\b0\fs24 \cf2 \
+}
