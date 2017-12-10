@@ -28,7 +28,7 @@ class NewDef extends React.Component {
 
     handleSubmit(e){
 
-      e.preventDefault()      
+      e.preventDefault()
       axios({
         method: 'post',
         url: '/api/definitions/new',
@@ -61,7 +61,7 @@ class NewDef extends React.Component {
                   <td><input type="text" ref='definition' /></td>
                 </tr>
                 <tr>
-                  <td>columns</td>
+                  <td>Columns</td>
                   <td><input type="text" ref='columns' /></td>
                 </tr>
                 <tr>
