@@ -21,9 +21,9 @@ ReactDOM.render(
   	<Switch>
 	    <Route exact path="/" component={Definitions} />
       <Route exact path="/api" component={Definitions} />
-      <Route exact path="/definitions/:definition_id" component={Definition} />
       <Route exact path="/definitions/new" component={NewDef} />
       <Route exact path="/definitions/:definition_id/edit" component={EditDef} />
+      <Route exact path="/definitions/:definition_id" component={Definition} />
     </Switch>
   </Router>,
 

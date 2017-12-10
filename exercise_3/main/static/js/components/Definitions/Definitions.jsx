@@ -21,7 +21,7 @@ class Definitions extends React.Component {
      // Fetch data from server...
 
     axios.get('/api/all_defs')
-      .then(resp => {        
+      .then(resp => {
         this.setState({
           definitions: resp.data
         });
