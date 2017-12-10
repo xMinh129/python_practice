@@ -1,20 +1,70 @@
 import random
-from flask import Flask, render_template, abort, request
+from flask import Flask, render_template, abort, request, jsonify
 import json
+import pymongo
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+
 
 app = Flask(__name__, static_folder='../static/dist', template_folder='../static')
 
+#Testing connection
+try:
+    conn=pymongo.MongoClient()
+    print "Connected successfully!!!"
+except pymongo.errors.ConnectionFailure, e:
+   print "Could not connect to MongoDB: %s" % e
+# Establishing connection with Mlab
+client = MongoClient('mongodb://test:test@ds159662.mlab.com:59662/medslack')
+# Database name: medslack
+db = client['medslack']
+
+
 @app.route('/')
 def index():
-    return render_template('index.html', data = definitions)
+    return render_template('index.html')
 
+@app.route('/definitions/new')
+def new_def():
+    return render_template('index.html')
 
-@app.route('api/definitions/new', methods=['POST'])
+@app.route('/api/all_defs', methods=['GET'])
+def all_defs():
+    definitions = db.definitions.find()
+    results = {}
+    for i, j in enumerate(definitions):
+        results[i] = {'id': str(j['_id']), 'definition' : j['definition'], 'columns': j['columns']}
+    if definitions:
+        return jsonify(results)
+    else:
+        return 'No definitions found'
+
+@app.route('/api/definitions/<definition_id>', methods=['GET'])
+def find_definition(definition_id):
+    definition = db.definitions.find_one({"_id" : ObjectId(definition_id)})
+    result = {'definition': definition['definition'], 'columns' : definition['columns'] }
+    return jsonify(result)
+
+@app.route('/api/definitions/new', methods=['GET','POST'])
 def new_definition():
-    definition = request.form['definition']
-    columns = request.form['columns'].split(',')
-    #Post to mongodb
+    if request.method == 'POST':
+        input_data = request.get_json()
+        definition = input_data['definition']
+        columns =  input_data['columns']
+        db.definitions.insert({"definition" : definition, "columns": columns})
+        return "success"
+    return json.dumps({'status':'OK'});
 
+@app.route('/api/definitions/<definition_id>/delete', methods=['GET', 'DELETE'])
+def delete_definition(definition_id):
+    if request.method == 'DELETE':
+        definition = db.definitions.remove({"_id" : ObjectId(definition_id)})
+        return "success"
+    return json.dumps({'status':'OK'});
+
+@app.route('/api/definitions/<definition_id>/tables/new', methods=['POST'])
+def new_table(definition_id):
+    return "Hello"
 
 
 if __name__ == '__main__':
