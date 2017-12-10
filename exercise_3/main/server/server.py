@@ -8,7 +8,7 @@ from bson.objectid import ObjectId
 
 app = Flask(__name__, static_folder='../static/dist', template_folder='../static')
 
-#Testing connection
+#Testing connection with MongoDB
 try:
     conn=pymongo.MongoClient()
     print "Connected successfully!!!"
@@ -62,9 +62,19 @@ def delete_definition(definition_id):
         return "success"
     return json.dumps({'status':'OK'});
 
+@app.route('/api/definitions/<definition_id>/edit', methods=['GET', 'PUT'])
+def update_definition(definition_id):
+    if request.method == 'PUT':
+        input_data = request.get_json()
+        definition = db.definitions.find_one_and_update({"_id" : ObjectId(definition_id)}, {'$set': input_data})
+        return "success"
+    return json.dumps({'status':'OK'});
+
+'''
 @app.route('/api/definitions/<definition_id>/tables/new', methods=['POST'])
 def new_table(definition_id):
     return "Hello"
+'''
 
 
 if __name__ == '__main__':

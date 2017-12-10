@@ -11,9 +11,9 @@ import NewTable from './components/Tables/New'
 import NewRow from './components/Tables/NewRow' */}
 
 import Definitions from './components/Definitions/Definitions'
-import NewDef from './components/Definitions/New'
 import Definition from './components/Definitions/Definition'
-
+import NewDef from './components/Definitions/New'
+import EditDef from './components/Definitions/Edit'
 
 ReactDOM.render(
 
@@ -21,8 +21,9 @@ ReactDOM.render(
   	<Switch>
 	    <Route exact path="/" component={Definitions} />
       <Route exact path="/api" component={Definitions} />
-      <Route exact path="/definitions/new" component={NewDef} />
       <Route exact path="/definitions/:definition_id" component={Definition} />
+      <Route exact path="/definitions/new" component={NewDef} />
+      <Route exact path="/definitions/:definition_id/edit" component={EditDef} />
     </Switch>
   </Router>,
 

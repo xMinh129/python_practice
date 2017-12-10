@@ -35,7 +35,10 @@ class DefinitionList extends Component {
       <tr className="patient-row">
 	      <td><Link to={`/definitions/${this.props.id}`}>{this.props.definition}</Link></td>
 	      <td>{this.props.columns}</td>
-        <td><button className="btn btn-add" onClick = {this.deleteDefinition}><i className="fa fa-trash-o" aria-hidden="true"></i></button></td>
+        <td>
+          <button className="btn btn-edit"><Link to={`/definitions/${this.props.id}/edit`}><i className="fa fa-pencil" aria-hidden="true"></i></Link></button>
+          <button className="btn btn-delete" onClick = {this.deleteDefinition}><i className="fa fa-trash-o" aria-hidden="true"></i></button>
+        </td>
 	    </tr>
     )
 

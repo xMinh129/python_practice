@@ -20,7 +20,6 @@ class Definition extends Component {
  loadDefinitionFromServer(){
 
    const definition_id = this.props.match.params.definition_id;
-   console.log(definition_id);
    axios
      .get(`/api/definitions/${definition_id}`)
      .then(resp => {
@@ -46,10 +45,12 @@ class Definition extends Component {
  render(){
 
     const definition = this.state.definition;
-    console.log(definition);
 
     return(
       <div>
+        <div className="btn btn-add">
+            <Link to={'/'}><span className="pe-7s-angle-left-circle return"></span>Definition List</Link>
+        </div>
         <div><h3>Definition of Tables: {definition.definition}</h3></div>
         <div><h3>Column Names: {definition.columns}</h3></div>
       </div>
