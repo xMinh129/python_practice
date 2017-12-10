@@ -14,6 +14,8 @@ import Definitions from './components/Definitions/Definitions'
 import Definition from './components/Definitions/Definition'
 import NewDef from './components/Definitions/New'
 import EditDef from './components/Definitions/Edit'
+import NewTable from './components/Tables/New'
+
 
 ReactDOM.render(
 
@@ -24,6 +26,7 @@ ReactDOM.render(
       <Route exact path="/definitions/new" component={NewDef} />
       <Route exact path="/definitions/:definition_id/edit" component={EditDef} />
       <Route exact path="/definitions/:definition_id" component={Definition} />
+      <Route exact path="/definitions/:definition_id/tables/new" component={NewTable} />
     </Switch>
   </Router>,
 

@@ -6,7 +6,6 @@ const Link = require('react-router-dom').Link;
 
 /****************************  DefinitionComp  ******************************/
 
-
 class Definition extends Component {
 
   constructor(props) {
@@ -23,6 +22,7 @@ class Definition extends Component {
    axios
      .get(`/api/definitions/${definition_id}`)
      .then(resp => {
+       console.log(resp.data)
        this.setState({
          definition: resp.data
        });
@@ -45,6 +45,7 @@ class Definition extends Component {
  render(){
 
     const definition = this.state.definition;
+    const definition_id = this.props.match.params.definition_id;
 
     return(
       <div>
@@ -53,7 +54,11 @@ class Definition extends Component {
         </div>
         <div><h3>Definition of Tables: {definition.definition}</h3></div>
         <div><h3>Column Names: {definition.columns}</h3></div>
+        <div className="btn btn-add">
+          <Link to={`/definitions/${definition_id}/tables/new`}><i className="fa fa-plus"></i>Add Table</Link>
+        </div>
       </div>
+
     )
 
   }

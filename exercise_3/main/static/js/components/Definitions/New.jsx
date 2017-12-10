@@ -28,8 +28,7 @@ class NewDef extends React.Component {
 
     handleSubmit(e){
 
-      e.preventDefault()
-      console.log(this.refs.definition.value)
+      e.preventDefault()      
       axios({
         method: 'post',
         url: '/api/definitions/new',
